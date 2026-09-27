@@ -1,0 +1,55 @@
+{
+  "rules": [
+    {
+      "id": "caps_spam",
+      "enabled": true,
+      "description": "Block messages that are mostly uppercase (shouting)",
+      "check": "caps_percent",
+      "threshold": 70,
+      "min_length": 8,
+      "action": "warn",
+      "strikes_before_mute": 3,
+      "mute_duration_sec": 300
+    },
+    {
+      "id": "message_rate",
+      "enabled": true,
+      "description": "Block rapid message flooding — max 5 messages in 10 seconds",
+      "check": "message_rate",
+      "max_messages": 5,
+      "window_sec": 10,
+      "action": "timeout",
+      "duration_sec": 60
+    },
+    {
+      "id": "word_filter",
+      "enabled": false,
+      "description": "Block specific words or phrases. Add words to the list below.",
+      "check": "word_match",
+      "words": [],
+      "mode": "contains",
+      "action": "delete_and_warn"
+    },
+    {
+      "id": "link_filter",
+      "enabled": false,
+      "description": "Block all links except from domains in the allow list. Empty allow_domains = block all links.",
+      "check": "link",
+      "allow_domains": [],
+      "action": "delete"
+    },
+    {
+      "id": "repeat_message",
+      "enabled": true,
+      "description": "Block the same message sent 3+ times in 2 minutes",
+      "check": "repeat",
+      "count": 3,
+      "window_sec": 120,
+      "action": "mute",
+      "mute_duration_sec": 600
+    }
+  ],
+  "exempt_roles": ["owner", "mod", "operator"],
+  "log_all_actions": true,
+  "dm_user_on_action": true
+}
